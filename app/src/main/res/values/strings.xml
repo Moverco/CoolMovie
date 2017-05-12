@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CoolMovie</string>
+    <string name="no_network">No network connect</string>
+    <string name="movie_title">电影名</string>
+    <string name="rate">Rate:</string>
+    <string name="sort_by_rate">Get top rated</string>
+    <string name="sort_by_popular">Get popular</string>
+    <string name="release_date">Release date:</string>
+    <string name="release_date_tmp">2010-01-01</string>
+    <string name="original_title">Original title:</string>
+    <string name="original_title_string">Original</string>
+    <string name="original_language">Original language:</string>
+    <string name="original_language_string">CN</string>
+    <string name="popularity">Popularity:</string>
+    <string name="popularity_string">9.99</string>
+    <string name="rate_string">9.9</string>
+</resources>
