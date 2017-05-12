@@ -145,7 +145,7 @@ public class RateSortedFragment extends Fragment {
                 bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtras(bundle);
-                getActivity().startActivity(intent);
+                startActivity(intent);
             }
         });
     }

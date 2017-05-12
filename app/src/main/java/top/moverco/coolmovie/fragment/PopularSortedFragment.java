@@ -1,6 +1,7 @@
 package top.moverco.coolmovie.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import okhttp3.Call;
 import top.moverco.coolmovie.R;
+import top.moverco.coolmovie.activity.DetailActivity;
 import top.moverco.coolmovie.adapter.MovieAdapter;
 import top.moverco.coolmovie.adapter.MovieItemClickListener;
 import top.moverco.coolmovie.database.MovieDB;
@@ -136,6 +138,14 @@ public class PopularSortedFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(mContext,mMovies.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("title",mMovies.get(position).getTitle());
+                bundle.putString("overview",mMovies.get(position).getOverview());
+                bundle.putString("poster_path",mMovies.get(position).getPoster_path());
+                bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
