@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import top.moverco.coolmovie.MainActivity;
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.entity.Movie;
+import top.moverco.coolmovie.fragment.PopularSortedFragment;
+import top.moverco.coolmovie.fragment.RateSortedFragment;
 import top.moverco.coolmovie.util.ImageLoader;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
@@ -23,6 +26,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     private List<Movie> mMovies;
     Context mContext;
+    private MovieItemClickListener mListener;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.mContext = context;
@@ -31,8 +35,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     @Override
     public MovieAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_layout, parent, false));
+        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_layout, parent, false),mListener);
         return holder;
+    }
+    public void setOnItemClickListener(MovieItemClickListener listener){
+        mListener = listener;
     }
 
     @Override
@@ -44,6 +51,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.popularity.setText(mMovies.get(position).getPopuarityAsString());
         holder.rate.setText(mMovies.get(position).getVoteAverageAsString());
         loadBitmap(mMovies.get(position), holder.moviePoster);
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -52,14 +60,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     }
 
     private void loadBitmap(Movie movie, ImageView imageView) {
-        String posterPath = MovieURLUtil.getPosterURL(movie);
+        String posterPath = MovieURLUtil.getPosterURL(movie.getPoster_path());
         ImageLoader loader = ImageLoader.build(mContext);
         loader.setReqheight(120).setReqWidth(120);
-        loader.bindBitmap(posterPath, imageView);
+        if ((MainActivity.currentFrament instanceof RateSortedFragment)&&RateSortedFragment.mIsRecyclerviewIdle){
+            loader.bindBitmap(posterPath, imageView);
+        }else if ((MainActivity.currentFrament instanceof PopularSortedFragment)&&PopularSortedFragment.mIsRecyclerviewIdle){
+            loader.bindBitmap(posterPath, imageView);
+        }
+
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private MovieItemClickListener mListener;
+
         TextView movieTitle;
         ImageView moviePoster;
         TextView release_date;
@@ -68,8 +84,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         TextView popularity;
         TextView rate;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView,MovieItemClickListener listener) {
             super(itemView);
+            mListener = listener;
+            itemView.setOnClickListener(this);
             movieTitle = (TextView) itemView.findViewById(R.id.movie_title);
             moviePoster = (ImageView) itemView.findViewById(R.id.movie_poster);
             release_date = (TextView) itemView.findViewById(R.id.release_date);
@@ -77,6 +95,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             original_language = (TextView) itemView.findViewById(R.id.original_language);
             popularity = (TextView) itemView.findViewById(R.id.popularity);
             rate = (TextView) itemView.findViewById(R.id.rate);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mListener!=null){
+                mListener.onItemClick(v,getAdapterPosition());
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package top.moverco.coolmovie.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -20,7 +22,9 @@ import java.util.List;
 
 import okhttp3.Call;
 import top.moverco.coolmovie.R;
+import top.moverco.coolmovie.activity.DetailActivity;
 import top.moverco.coolmovie.adapter.MovieAdapter;
+import top.moverco.coolmovie.adapter.MovieItemClickListener;
 import top.moverco.coolmovie.database.MovieDB;
 import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.util.JsonParseUtil;
@@ -36,7 +40,8 @@ public class RateSortedFragment extends Fragment {
     Context mContext;
     List<Movie> mMovies = new ArrayList<>();
     private MovieDB db;
-
+    public static boolean mIsRecyclerviewIdle = false;
+    MovieAdapter mAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -50,6 +55,14 @@ public class RateSortedFragment extends Fragment {
         View view = inflater.inflate(R.layout.rate_fragment, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_rate_fragment);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+                    mIsRecyclerviewIdle = true;
+                }else mIsRecyclerviewIdle = false;
+            }
+        });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         return view;
     }
@@ -60,6 +73,7 @@ public class RateSortedFragment extends Fragment {
         LoggerUtil.debug("rate get movie");
         LoggerUtil.debug("url" + MovieURLUtil.GET_TOP_RATED_ROOT_URL);
         loadMovies();
+
     }
 
     @Override
@@ -103,8 +117,8 @@ public class RateSortedFragment extends Fragment {
                     public void onResponse(String response, int id) {
                         mMovies.clear();
                         mMovies = JsonParseUtil.parse(response);
-                        MovieAdapter adapter = new MovieAdapter(mContext, mMovies);
-                        mRecyclerView.setAdapter(adapter);
+                        mAdapter = new MovieAdapter(mContext, mMovies);
+                        mRecyclerView.setAdapter(mAdapter);
                     }
                 });
         saveMovies(mMovies);
@@ -115,10 +129,24 @@ public class RateSortedFragment extends Fragment {
             LoggerUtil.debug("Load movies from database");
             mMovies = getMoviesFromDatabase();
             LoggerUtil.debug("error road");
-            MovieAdapter adapter = new MovieAdapter(mContext,mMovies);
-            mRecyclerView.setAdapter(adapter);
+            mAdapter = new MovieAdapter(mContext,mMovies);
+            mRecyclerView.setAdapter(mAdapter);
         }else {
             getMovies();
         }
+        mAdapter.setOnItemClickListener(new MovieItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(mContext,mMovies.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("title",mMovies.get(position).getTitle());
+                bundle.putString("overview",mMovies.get(position).getOverview());
+                bundle.putString("poster_path",mMovies.get(position).getPoster_path());
+                bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

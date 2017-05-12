@@ -1,7 +1,6 @@
 package top.moverco.coolmovie.util;
 
 import top.moverco.coolmovie.Config.Config;
-import top.moverco.coolmovie.entity.Movie;
 
 /**
  * Created by liuzongxiang on 11/05/2017.
@@ -42,8 +41,8 @@ public class MovieURLUtil {
         return null;
     }
 
-    public static String getPosterURL(Movie movie){
-        return  String.format(Config.POSTER_ROOT,movie.getPoster_path());
+    public static String getPosterURL(String string){
+        return  String.format(Config.POSTER_ROOT,string);
     }
 
 }

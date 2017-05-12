@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout noNetworkFrame;
     private FrameLayout listFrame;
     private Drawable mDrawable;
-    private static Fragment currentFrament = null;
+    public static Fragment currentFrament = null;
     private RateSortedFragment mRateSortedFragment;
     private PopularSortedFragment mPopularSortedFragment;
 
