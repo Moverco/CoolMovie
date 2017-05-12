@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import java.util.List;
 import okhttp3.Call;
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.adapter.MovieAdapter;
+import top.moverco.coolmovie.database.MovieDB;
 import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.util.JsonParseUtil;
 import top.moverco.coolmovie.util.LoggerUtil;
@@ -29,10 +31,11 @@ import top.moverco.coolmovie.util.MovieURLUtil;
  * Created by liuzongxiang on 11/05/2017.
  */
 
-public class RateSortedFragment extends Fragment implements BaseFragment {
+public class RateSortedFragment extends Fragment {
     private RecyclerView mRecyclerView;
     Context mContext;
     List<Movie> mMovies = new ArrayList<>();
+    private MovieDB db;
 
 
     @Override
@@ -56,13 +59,35 @@ public class RateSortedFragment extends Fragment implements BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         LoggerUtil.debug("rate get movie");
         LoggerUtil.debug("url" + MovieURLUtil.GET_TOP_RATED_ROOT_URL);
-        getMovies(MovieURLUtil.GET_TOP_RATED_ROOT_URL);
+        loadMovies();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.refresh:
+                getMovies();
+                return true;
+        }
+        return false;
+    }
+
+    private void saveMovies(List<Movie> movies){
+        db = MovieDB.getInstance(mContext);
+        db.saveMovieListToRateTable(movies);
     }
 
 
-    public void getMovies(String url) {
+    public List<Movie> getMoviesFromDatabase(){
+        db = MovieDB.getInstance(mContext);
+        return db.getMovieListFromRatetable();
+    }
+    public void refreshMovies(){
+        getMovies();
+    }
+    private void getMovies() {
         OkHttpUtils.get()
-                .url(url)
+                .url(MovieURLUtil.GET_TOP_RATED_ROOT_URL)
                 .build()
                 .writeTimeOut(8000)
                 .connTimeOut(8000)
@@ -76,12 +101,24 @@ public class RateSortedFragment extends Fragment implements BaseFragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        LoggerUtil.debug(response);
                         mMovies.clear();
                         mMovies = JsonParseUtil.parse(response);
                         MovieAdapter adapter = new MovieAdapter(mContext, mMovies);
                         mRecyclerView.setAdapter(adapter);
                     }
                 });
+        saveMovies(mMovies);
+    }
+    private void loadMovies(){
+        db = MovieDB.getInstance(mContext);
+        if (getMoviesFromDatabase().size()>1){
+            LoggerUtil.debug("Load movies from database");
+            mMovies = getMoviesFromDatabase();
+            LoggerUtil.debug("error road");
+            MovieAdapter adapter = new MovieAdapter(mContext,mMovies);
+            mRecyclerView.setAdapter(adapter);
+        }else {
+            getMovies();
+        }
     }
 }

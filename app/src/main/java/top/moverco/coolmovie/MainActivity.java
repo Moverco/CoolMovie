@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.request.RequestCall;
@@ -78,14 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 switchToFragment(mPopularSortedFragment);
                 return true;
             case R.id.refresh:
-                checkIfHasNetWork();
-                if (currentFrament == mRateSortedFragment) {
-                    currentFrament = null;
-                    switchToFragment(mRateSortedFragment);
-                } else {
-                    currentFrament = null;
-                    switchToFragment(mPopularSortedFragment);
+                if (currentFrament==mRateSortedFragment){
+                    mRateSortedFragment.refreshMovies();
+                }else if (currentFrament==mPopularSortedFragment){
+                    mPopularSortedFragment.refreshMovies();
                 }
+                Toast.makeText(MainActivity.this,"refresh",Toast.LENGTH_SHORT).show();
+                return true;
         }
         return false;
     }
