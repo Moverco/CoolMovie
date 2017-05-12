@@ -17,6 +17,7 @@ import top.moverco.coolmovie.entity.Movie;
  */
 
 public class JsonParseUtil {
+
     public static List<Movie> parse(String jsonString) {
         List<Movie> movies = new ArrayList<>();
         JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();

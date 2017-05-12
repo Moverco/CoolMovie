@@ -77,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
                 cancelLoad(GET_TOP_RATED_ROOT_URL);
                 switchToFragment(mPopularSortedFragment);
                 return true;
+            case R.id.refresh:
+                checkIfHasNetWork();
+                if (currentFrament == mRateSortedFragment) {
+                    currentFrament = null;
+                    switchToFragment(mRateSortedFragment);
+                } else {
+                    currentFrament = null;
+                    switchToFragment(mPopularSortedFragment);
+                }
         }
         return false;
     }
@@ -88,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 noNetworkFrame.setForeground(mDrawable);
                 listFrame.setVisibility(View.GONE);
                 noNetworkFrame.setVisibility(View.VISIBLE);
-                loadFromDatabase();
             }
         } else {
             listFrame.setVisibility(View.VISIBLE);
@@ -97,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void switchToFragment(Fragment fragment) {
+        if (currentFrament == fragment)
+            return;
         LoggerUtil.debug("switch to fragment");
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
@@ -106,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
         LoggerUtil.debug("switch to fragment end");
     }
 
-    private void loadFromDatabase() {
-
-    }
 
     private void cancelLoad(String url) {
         RequestCall call = OkHttpUtils.get()

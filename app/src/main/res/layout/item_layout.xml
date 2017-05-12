@@ -6,6 +6,7 @@
     android:layout_height="130dp"
     android:layout_margin="2dp"
     android:orientation = "horizontal"
+    android:elevation="20dp"
     android:background="@color/white"
     android:layout_weight="1">
 
