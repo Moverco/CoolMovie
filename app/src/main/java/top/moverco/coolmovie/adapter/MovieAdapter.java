@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import top.moverco.coolmovie.MainActivity;
 import top.moverco.coolmovie.R;
+import top.moverco.coolmovie.activity.MainActivity;
 import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.fragment.PopularSortedFragment;
 import top.moverco.coolmovie.fragment.RateSortedFragment;

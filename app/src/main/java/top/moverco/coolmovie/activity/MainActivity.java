@@ -1,4 +1,4 @@
-package top.moverco.coolmovie;
+package top.moverco.coolmovie.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -17,6 +17,8 @@ import com.zhy.http.okhttp.request.RequestCall;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import top.moverco.coolmovie.R;
+import top.moverco.coolmovie.database.MovieDB;
 import top.moverco.coolmovie.fragment.PopularSortedFragment;
 import top.moverco.coolmovie.fragment.RateSortedFragment;
 import top.moverco.coolmovie.util.LoggerUtil;
@@ -37,12 +39,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(new LoggerInterceptor("TAG"))
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                //其他配置
                 .build();
 
         OkHttpUtils.initClient(okHttpClient);
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         currentFrament = mPopularSortedFragment;
         switchToFragment(mRateSortedFragment);
     }
+
 
     void initViews() {
         noNetworkFrame = (FrameLayout) findViewById(R.id.no_network_view);
@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void checkIfHasNetWork() {
-        if (!NetWorkUtil.isNetWorkAvailable(this)) {
+        if (!NetWorkUtil.isNetWorkAvailable(this)&&checkDatabaseIsNull()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mDrawable = getResources().getDrawable(R.mipmap.ic_launcher_round);
+                mDrawable = getResources().getDrawable(R.mipmap.footprint);
                 noNetworkFrame.setForeground(mDrawable);
                 listFrame.setVisibility(View.GONE);
                 noNetworkFrame.setVisibility(View.VISIBLE);
@@ -102,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
             listFrame.setVisibility(View.VISIBLE);
             noNetworkFrame.setVisibility(View.GONE);
         }
+    }
+
+    private boolean checkDatabaseIsNull() {
+        MovieDB movieDB = MovieDB.getInstance(this);
+        return movieDB.getMovieListFromRatetable().size()==0?true:false;
     }
 
     private void switchToFragment(Fragment fragment) {

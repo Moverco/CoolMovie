@@ -9,9 +9,10 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.util.ImageLoader;
-import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 /**
@@ -20,10 +21,11 @@ import top.moverco.coolmovie.util.MovieURLUtil;
 
 public class DetailActivity extends AppCompatActivity {
 
-//    ImageView detail_poster;
-    ImageView detail_backdrop;
-    TextView detail_title;
-    TextView detail_overview;
+    @BindView(R.id.detail_backdrop) ImageView detail_backdrop;
+    @BindView(R.id.detail_title) TextView detail_title;
+    @BindView(R.id.detail_overview) TextView detail_overview;
+    @BindView(R.id.detail_release_date) TextView detail_release_date;
+    @BindView(R.id.detail_rate) TextView detail_rate;
 
 
 
@@ -33,26 +35,24 @@ public class DetailActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
-        initViews();
+        ButterKnife.bind(this);
         Intent intent = getIntent();
         detail_title.setText(intent.getStringExtra("title"));
         detail_overview.setText(intent.getStringExtra("overview"));
-        String poster_path = intent.getStringExtra("poster_path");
+        detail_release_date.setText(intent.getStringExtra("release_date"));
+        detail_rate.setText(intent.getStringExtra("rate"));
         String backdrop_path = intent.getStringExtra("backdrop_path");
-        LoggerUtil.debug(poster_path);
         ImageLoader loader = ImageLoader.build(DetailActivity.this);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int display_width = metrics.widthPixels;
         loader.setReqheight(display_width).setReqWidth(display_width);
-//        loader.bindBitmap(MovieURLUtil.getPosterURL(poster_path),detail_poster);
         loader.bindBitmap(MovieURLUtil.getPosterURL(backdrop_path),detail_backdrop);
     }
 
-    void initViews(){
-        detail_backdrop = (ImageView) findViewById(R.id.detail_backdrop);
-        detail_overview = (TextView) findViewById(R.id.detail_overview);
-//        detail_poster = (ImageView) findViewById(R.id.detail_poster);
-        detail_title = (TextView) findViewById(R.id.detail_title);
-    }
+//    void initViews(){
+//        detail_backdrop = (ImageView) findViewById(R.id.detail_backdrop);
+//        detail_overview = (TextView) findViewById(R.id.detail_overview);
+//        detail_title = (TextView) findViewById(R.id.detail_title);
+//    }
 }

@@ -31,9 +31,7 @@ import top.moverco.coolmovie.util.JsonParseUtil;
 import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
-/**
- * Created by liuzongxiang on 11/05/2017.
- */
+
 
 public class PopularSortedFragment extends Fragment {
     List<Movie> mMovies = new ArrayList<>();
@@ -143,6 +141,8 @@ public class PopularSortedFragment extends Fragment {
                 bundle.putString("overview",mMovies.get(position).getOverview());
                 bundle.putString("poster_path",mMovies.get(position).getPoster_path());
                 bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
+                bundle.putString("release_date",mMovies.get(position).getRelease_date());
+                bundle.putString("rate",mMovies.get(position).getVoteAverageAsString());
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);

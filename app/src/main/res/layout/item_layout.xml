@@ -16,7 +16,7 @@
         android:layout_width="100dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@mipmap/movie_load128"/>
     <LinearLayout
         android:gravity="center"
         android:layout_gravity="center_horizontal"
