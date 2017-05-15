@@ -1,6 +1,7 @@
 package top.moverco.coolmovie.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import top.moverco.coolmovie.R;
-import top.moverco.coolmovie.activity.MainActivity;
 import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.fragment.PopularSortedFragment;
-import top.moverco.coolmovie.fragment.RateSortedFragment;
 import top.moverco.coolmovie.util.ImageLoader;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
@@ -28,7 +26,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     Context mContext;
     private MovieItemClickListener mListener;
 
-    public MovieAdapter(Context context, List<Movie> movies) {
+    public MovieAdapter(Context context, @NonNull List<Movie> movies) {
         this.mContext = context;
         this.mMovies = movies;
     }
@@ -63,11 +61,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         String posterPath = MovieURLUtil.getPosterURL(movie.getPoster_path());
         ImageLoader loader = ImageLoader.build(mContext);
         loader.setReqheight(120).setReqWidth(120);
-        if ((MainActivity.currentFrament instanceof RateSortedFragment)&&RateSortedFragment.mIsRecyclerviewIdle){
-            loader.bindBitmap(posterPath, imageView);
-        }else if ((MainActivity.currentFrament instanceof PopularSortedFragment)&&PopularSortedFragment.mIsRecyclerviewIdle){
-            loader.bindBitmap(posterPath, imageView);
-        }
+        loader.bindBitmap(posterPath, imageView);
 
     }
 
@@ -102,6 +96,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             if (mListener!=null){
                 mListener.onItemClick(v,getAdapterPosition());
             }
+        }
+
+        @Override
+        public String toString() {
+            return "movie adapter";
         }
     }
 }

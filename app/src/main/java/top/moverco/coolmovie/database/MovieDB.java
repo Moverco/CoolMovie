@@ -22,6 +22,35 @@ public class MovieDB {
     private static final String RATE_TABLE = "rate";
     private static final String POP_TABLE = "pop";
 
+//            "id integer not null," +
+//            "title text not null," +
+//            "overview text," +
+//            "poster_path text," +
+//            "release_date text," +
+//            "popularity real," +
+//            "vote_average real" +
+//            "vote_count integer" +
+//            "original_title text" +
+//            "original_language text" +
+//            "backdrop_path text";
+//
+    private static final String ID = "id";
+    private static final String TITLE = "title";
+    private static final String OVERVIEW = "overview";
+    private static final String POSTER_PATH = "poster_path";
+    private static final String RELEASE_DATE = "release_date";
+    private static final String POPULARITY = "popularity";
+    private static final String VOTE_AVERAGE = "vote_average";
+    private static final String VOTE_COUNT = "vote_count";
+    private static final String ORIGINAL_TITLE = "original_title";
+    private static final String ORIGINAL_LANGUAGE = "original_language";
+    private static final String BACKDROP_PATH = "backdrop_path";
+
+    private static final String DELETE_FROM_TABLE = "delete from ";
+
+    private static String QUERY_RATE = "select * from "+RATE_TABLE+" order by "+VOTE_AVERAGE+" desc";
+    private static String QUERY_POP = "select * from "+POP_TABLE+" order by "+VOTE_AVERAGE+" desc";
+
 
     private MovieDB(Context context) {
         MovieOpenHelper helper = new MovieOpenHelper(context);
@@ -40,33 +69,7 @@ public class MovieDB {
         return mMovieDB;
     }
 
-    //
-//    private static final String CREATE_RATE_TABLE = "create table rate if not exist(" +
-//            "id integer not null," +
-//            "title text not null," +
-//            "overview text," +
-//            "poster_path text," +
-//            "release_date text," +
-//            "popularity real," +
-//            "vote_average real" +
-//            "vote_count integer" +
-//            "original_title text" +
-//            "original_language text" +
-//            "backdrop_path text)";
-//
-    private static final String ID = "id";
-    private static final String TITLE = "title";
-    private static final String OVERVIEW = "overview";
-    private static final String POSTER_PATH = "poster_path";
-    private static final String RELEASE_DATE = "release_date";
-    private static final String POPULARITY = "popularity";
-    private static final String VOTE_AVERAGE = "vote_average";
-    private static final String VOTE_COUNT = "vote_count";
-    private static final String ORIGINAL_TITLE = "original_title";
-    private static final String ORIGINAL_LANGUAGE = "original_language";
-    private static final String BACKDROP_PATH = "backdrop_path";
 
-    private static final String DELETE_FROM_TABLE = "delete from ";
 
     private void saveMovieToDatabase(Movie movie, String tableName) {
         if (!tableName.equals(RATE_TABLE) && !tableName.equals(POP_TABLE))
@@ -93,11 +96,12 @@ public class MovieDB {
         Cursor cursor = db.query(tableName,null,null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             db.execSQL(DELETE_FROM_TABLE+tableName);
-            LoggerUtil.debug("Clear table"+tableName);
+            LoggerUtil.debug("Clear table "+tableName);
         }
         if (movies!=null){
             for (Movie movie:movies){
                 saveMovieToDatabase(movie,tableName);
+                LoggerUtil.debug("saved:"+ movie.getTitle());
             }
         }
     }
@@ -118,10 +122,16 @@ public class MovieDB {
     }
 
     private List<Movie> getMovieListFromDatabase(String tableName){
+        LoggerUtil.debug("get movies from database");
         if (!tableName.equals(RATE_TABLE) && !tableName.equals(POP_TABLE))
             return null;
         List<Movie> movies = new ArrayList<>();
-        Cursor cursor = db.query(tableName,null,null,null,null,null,null,null);
+        String order_string;
+        if (tableName.equals(RATE_TABLE)){
+            order_string = VOTE_AVERAGE;
+        }else order_string = POPULARITY;
+        String query =  "select * from "+tableName+" order by "+order_string+" desc";
+        Cursor cursor = db.rawQuery(query,null);
         if (cursor.moveToFirst()){
             do {
                 Movie movie = new Movie();
@@ -139,6 +149,7 @@ public class MovieDB {
                 movies.add(movie);
             }while (cursor.moveToNext());
         }
+        LoggerUtil.debug(movies.toString());
         return movies;
     }
     public List<Movie> getMovieListFromPopTable(){
@@ -146,5 +157,11 @@ public class MovieDB {
     }
     public List<Movie> getMovieListFromRatetable(){
         return getMovieListFromDatabase(RATE_TABLE);
+    }
+    public void printDatabase(String tableName){
+        if (!tableName.equals(RATE_TABLE) && !tableName.equals(POP_TABLE))
+            return;
+        List<Movie> movies = getMovieListFromDatabase(tableName);
+        LoggerUtil.debug(movies.toString());
     }
 }

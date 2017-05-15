@@ -12,9 +12,6 @@ public class MovieURLUtil {
     public static final int POPULAR = 0x0100;
     public static final int TOP_RATED = 0x1000;
 
-//    public static String GET_RATE_URL = MovieURLUtil.getURL(MovieURLUtil.TOP_RATED);
-//    public static String GET_POP_URL = MovieURLUtil.getURL(MovieURLUtil.POPULAR);
-
     private final static String _UPCOMING = "upcoming";
     private final static String _LATEST = "latest";
     private final static String _POPULAR = "popular";
@@ -23,7 +20,7 @@ public class MovieURLUtil {
     private static final String GET_UPCOMING_URL = String.format(Config.HTTP_ROOT, _UPCOMING, Config.API_KEY_V3);
     private static final String GET_LATEST_URL = String.format(Config.HTTP_ROOT, _LATEST, Config.API_KEY_V3);
     public static final String GET_POPULAR_URL = String.format(Config.HTTP_ROOT, _POPULAR, Config.API_KEY_V3);
-    public static final String GET_TOP_RATED_ROOT_URL = String.format(Config.HTTP_ROOT, _TOP_RATED, Config.API_KEY_V3);
+    public static final String GET_TOP_RATED_ROOT_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=f98d0ce3f94249a434d6d7faf25cf20a";
 
 
     public static String getURL(int msg) {
