@@ -1,6 +1,5 @@
 package top.moverco.coolmovie.activity;
 
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import top.moverco.coolmovie.R;
-import top.moverco.coolmovie.database.MovieDB;
 import top.moverco.coolmovie.fragment.PopularSortedFragment;
 import top.moverco.coolmovie.fragment.RateSortedFragment;
 import top.moverco.coolmovie.util.LoggerUtil;
@@ -30,7 +28,6 @@ import static top.moverco.coolmovie.util.MovieURLUtil.GET_TOP_RATED_ROOT_URL;
 public class MainActivity extends AppCompatActivity {
     private FrameLayout noNetworkFrame;
     private FrameLayout listFrame;
-    private Drawable mDrawable;
     public static Fragment currentFrament = null;
     private RateSortedFragment mRateSortedFragment;
     private PopularSortedFragment mPopularSortedFragment;
@@ -91,10 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void checkIfHasNetWork() {
-        if (!NetWorkUtil.isNetWorkAvailable(this)&&checkDatabaseIsNull()) {
+        if (!NetWorkUtil.isNetWorkAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mDrawable = getResources().getDrawable(R.mipmap.footprint);
-                noNetworkFrame.setForeground(mDrawable);
                 listFrame.setVisibility(View.GONE);
                 noNetworkFrame.setVisibility(View.VISIBLE);
             }
@@ -104,10 +99,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkDatabaseIsNull() {
-        MovieDB movieDB = MovieDB.getInstance(this);
-        return movieDB.getMovieListFromRatetable().size()==0?true:false;
-    }
 
     private void switchToFragment(Fragment fragment) {
         if (currentFrament == fragment)

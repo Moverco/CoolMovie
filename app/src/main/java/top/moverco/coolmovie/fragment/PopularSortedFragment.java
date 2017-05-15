@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -25,7 +24,6 @@ import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.activity.DetailActivity;
 import top.moverco.coolmovie.adapter.MovieAdapter;
 import top.moverco.coolmovie.adapter.MovieItemClickListener;
-import top.moverco.coolmovie.database.MovieDB;
 import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.util.JsonParseUtil;
 import top.moverco.coolmovie.util.LoggerUtil;
@@ -37,7 +35,6 @@ public class PopularSortedFragment extends Fragment {
     List<Movie> mMovies = new ArrayList<>();
     Context mContext;
     RecyclerView mRecyclerView;
-    private MovieDB db;
     public static boolean mIsRecyclerviewIdle = false;
     MovieAdapter mAdapter;
 
@@ -72,27 +69,9 @@ public class PopularSortedFragment extends Fragment {
         loadMovies();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.refresh:
-                getMovies();
-                Toast.makeText(mContext, "refresh", Toast.LENGTH_SHORT).show();
-                return true;
-        }
-        return false;
-    }
 
-    public List<Movie> getMoviesFromDatabase() {
-        db = MovieDB.getInstance(mContext);
-        return db.getMovieListFromPopTable();
-    }
 
-    public void refreshMovies() {
-        getMovies();
-    }
-
-    private void getMovies() {
+    private void loadMovies() {
         OkHttpUtils.get()
                 .url(MovieURLUtil.GET_POPULAR_URL)
                 .build()
@@ -112,42 +91,27 @@ public class PopularSortedFragment extends Fragment {
                         mMovies = JsonParseUtil.parse(response);
                         mAdapter = new MovieAdapter(mContext, mMovies);
                         mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new MovieItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Toast.makeText(mContext,mMovies.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("title",mMovies.get(position).getTitle());
+                                bundle.putString("overview",mMovies.get(position).getOverview());
+                                bundle.putString("poster_path",mMovies.get(position).getPoster_path());
+                                bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
+                                bundle.putString("release_date",mMovies.get(position).getRelease_date());
+                                bundle.putString("rate",mMovies.get(position).getVoteAverageAsString());
+                                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
-        saveMovies(mMovies);
     }
 
-    private void saveMovies(List<Movie> movies) {
-        db = MovieDB.getInstance(mContext);
-        db.saveMovieListToPopTable(movies);
-    }
-
-    private void loadMovies() {
-        if (getMoviesFromDatabase().size() > 1) {
-            LoggerUtil.debug("Load movies from database");
-            mMovies = getMoviesFromDatabase();
-            LoggerUtil.debug("error road");
-            mAdapter = new MovieAdapter(mContext, mMovies);
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            getMovies();
-        }
-        mAdapter.setOnItemClickListener(new MovieItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(mContext,mMovies.get(position).getTitle(),Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("title",mMovies.get(position).getTitle());
-                bundle.putString("overview",mMovies.get(position).getOverview());
-                bundle.putString("poster_path",mMovies.get(position).getPoster_path());
-                bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
-                bundle.putString("release_date",mMovies.get(position).getRelease_date());
-                bundle.putString("rate",mMovies.get(position).getVoteAverageAsString());
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-            }
-        });
+    public void refreshMovies() {
+        loadMovies();
     }
 }
