@@ -24,7 +24,7 @@ public class MovieOpenHelper extends SQLiteOpenHelper {
 //    private String original_title;
 //    private String original_language;
 //    private String backdrop_path;
-    public static final String DB_NAME = "coolmovie";
+    public static final String DB_NAME = "coolmovie.db";
     private static final String CREATE_RATE_TABLE = "create table rate(" +
             "id integer not null primary key," +
             "title text not null," +

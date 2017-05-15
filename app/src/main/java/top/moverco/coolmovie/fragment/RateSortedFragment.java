@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -42,6 +43,7 @@ public class RateSortedFragment extends Fragment {
     private MovieDB db;
     public static boolean mIsRecyclerviewIdle = false;
     MovieAdapter mAdapter;
+    ProgressBar mProgressBar;
 
     @Override
     public void onAttach(Context context) {
@@ -54,6 +56,7 @@ public class RateSortedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rate_fragment, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_rate_fragment);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.rate_progress);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -71,7 +74,7 @@ public class RateSortedFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LoggerUtil.debug("rate get movie");
-        LoggerUtil.debug("url" + MovieURLUtil.GET_TOP_RATED_ROOT_URL);
+        LoggerUtil.debug("url:" + MovieURLUtil.GET_TOP_RATED_ROOT_URL);
         loadMovies();
 
     }
@@ -94,6 +97,9 @@ public class RateSortedFragment extends Fragment {
 
     public List<Movie> getMoviesFromDatabase(){
         db = MovieDB.getInstance(mContext);
+        if (db.getMovieListFromRatetable().isEmpty()){
+            return null;
+        }
         return db.getMovieListFromRatetable();
     }
     public void refreshMovies(){
@@ -125,13 +131,16 @@ public class RateSortedFragment extends Fragment {
     }
     private void loadMovies(){
         db = MovieDB.getInstance(mContext);
-        if (getMoviesFromDatabase().size()>1){
+        if (getMoviesFromDatabase()!=null){
             LoggerUtil.debug("Load movies from database");
             mMovies = getMoviesFromDatabase();
             LoggerUtil.debug("error road");
             mAdapter = new MovieAdapter(mContext,mMovies);
             mRecyclerView.setAdapter(mAdapter);
         }else {
+            getMovies();
+        }
+        while (mAdapter==null){
             getMovies();
         }
         mAdapter.setOnItemClickListener(new MovieItemClickListener() {
@@ -147,7 +156,7 @@ public class RateSortedFragment extends Fragment {
                 bundle.putString("rate",mMovies.get(position).getVoteAverageAsString());
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                getActivity().startActivity(intent);
             }
         });
     }

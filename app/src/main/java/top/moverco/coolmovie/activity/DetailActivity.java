@@ -1,7 +1,9 @@
 package top.moverco.coolmovie.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -13,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.util.ImageLoader;
+import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 /**
@@ -21,6 +24,7 @@ import top.moverco.coolmovie.util.MovieURLUtil;
 
 public class DetailActivity extends AppCompatActivity {
 
+
     @BindView(R.id.detail_backdrop) ImageView detail_backdrop;
     @BindView(R.id.detail_title) TextView detail_title;
     @BindView(R.id.detail_overview) TextView detail_overview;
@@ -28,12 +32,12 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.detail_rate) TextView detail_rate;
 
 
-
-
+    Context mContext;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        LoggerUtil.debug("detail activity");
+        super.onCreate(savedInstanceState, persistentState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
         ButterKnife.bind(this);
         Intent intent = getIntent();
@@ -47,12 +51,8 @@ public class DetailActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int display_width = metrics.widthPixels;
         loader.setReqheight(display_width).setReqWidth(display_width);
+        loader.setReqheight(320).setReqWidth(320);
         loader.bindBitmap(MovieURLUtil.getPosterURL(backdrop_path),detail_backdrop);
     }
 
-//    void initViews(){
-//        detail_backdrop = (ImageView) findViewById(R.id.detail_backdrop);
-//        detail_overview = (TextView) findViewById(R.id.detail_overview);
-//        detail_title = (TextView) findViewById(R.id.detail_title);
-//    }
 }

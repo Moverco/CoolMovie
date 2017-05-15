@@ -146,6 +146,7 @@ public class PopularSortedFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
             }
         });
     }
