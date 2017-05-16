@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.util.ImageLoader;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 /**
@@ -33,10 +34,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     @Override
     public MovieAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_layout, parent, false),mListener);
+        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_layout, parent, false), mListener);
         return holder;
     }
-    public void setOnItemClickListener(MovieItemClickListener listener){
+
+    public void setOnItemClickListener(MovieItemClickListener listener) {
         mListener = listener;
     }
 
@@ -49,6 +51,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.popularity.setText(mMovies.get(position).getPopuarityAsString());
         holder.rate.setText(mMovies.get(position).getVoteAverageAsString());
         loadBitmap(mMovies.get(position), holder.moviePoster);
+
         holder.itemView.setTag(position);
     }
 
@@ -59,9 +62,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     private void loadBitmap(Movie movie, ImageView imageView) {
         String posterPath = MovieURLUtil.getPosterURL(movie.getPoster_path());
-        ImageLoader loader = ImageLoader.build(mContext);
-        loader.setReqheight(120).setReqWidth(120);
-        loader.bindBitmap(posterPath, imageView);
+        Glide.with(mContext).load(posterPath).centerCrop().placeholder(R.mipmap.movie_load128).crossFade().into(imageView);
 
     }
 
@@ -78,7 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         TextView popularity;
         TextView rate;
 
-        public MyViewHolder(View itemView,MovieItemClickListener listener) {
+        public MyViewHolder(View itemView, MovieItemClickListener listener) {
             super(itemView);
             mListener = listener;
             itemView.setOnClickListener(this);
@@ -93,14 +94,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         @Override
         public void onClick(View v) {
-            if (mListener!=null){
-                mListener.onItemClick(v,getAdapterPosition());
+            if (mListener != null) {
+                mListener.onItemClick(v, getAdapterPosition());
             }
-        }
-
-        @Override
-        public String toString() {
-            return "movie adapter";
         }
     }
 }

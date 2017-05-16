@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 switchToFragment(mPopularSortedFragment);
                 return true;
             case R.id.refresh:
+                checkIfHasNetWork();
                 if (currentFrament==mRateSortedFragment){
                     mRateSortedFragment.refreshMovies();
                 }else if (currentFrament==mPopularSortedFragment){

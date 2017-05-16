@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +63,7 @@ public class RateSortedFragment extends Fragment {
                 }else mIsRecyclerviewIdle = false;
             }
         });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
         return view;
     }
 
@@ -104,16 +104,9 @@ public class RateSortedFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
                                 Toast.makeText(mContext,mMovies.get(position).getTitle(),Toast.LENGTH_SHORT).show();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("title",mMovies.get(position).getTitle());
-                                bundle.putString("overview",mMovies.get(position).getOverview());
-                                bundle.putString("poster_path",mMovies.get(position).getPoster_path());
-                                bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
-                                bundle.putString("release_date",mMovies.get(position).getRelease_date());
-                                bundle.putString("rate",mMovies.get(position).getVoteAverageAsString());
                                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                                intent.putExtras(bundle);
-                                getActivity().startActivity(intent);
+                                intent.putExtra("movie",mMovies.get(position));
+                                startActivity(intent);
                             }
                         });
                     }

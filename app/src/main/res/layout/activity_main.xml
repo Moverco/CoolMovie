@@ -11,7 +11,7 @@
     <FrameLayout
         android:id="@+id/no_network_view"
         android:visibility="gone"
-        android:background="@color/gray"
+        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +28,7 @@
 
     <FrameLayout
         android:id="@+id/list_frame"
-        android:background="@color/gray"
+        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

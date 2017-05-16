@@ -30,7 +30,6 @@ import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 
-
 public class PopularSortedFragment extends Fragment {
     List<Movie> mMovies = new ArrayList<>();
     Context mContext;
@@ -69,8 +68,6 @@ public class PopularSortedFragment extends Fragment {
         loadMovies();
     }
 
-
-
     private void loadMovies() {
         OkHttpUtils.get()
                 .url(MovieURLUtil.GET_POPULAR_URL)
@@ -95,15 +92,8 @@ public class PopularSortedFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
                                 Toast.makeText(mContext,mMovies.get(position).getTitle(),Toast.LENGTH_SHORT).show();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("title",mMovies.get(position).getTitle());
-                                bundle.putString("overview",mMovies.get(position).getOverview());
-                                bundle.putString("poster_path",mMovies.get(position).getPoster_path());
-                                bundle.putString("backdrop_path",mMovies.get(position).getBackdrop_path());
-                                bundle.putString("release_date",mMovies.get(position).getRelease_date());
-                                bundle.putString("rate",mMovies.get(position).getVoteAverageAsString());
                                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                                intent.putExtras(bundle);
+                                intent.putExtra("movie",mMovies.get(position));
                                 startActivity(intent);
                             }
                         });

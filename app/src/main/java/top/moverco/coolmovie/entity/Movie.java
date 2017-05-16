@@ -1,6 +1,9 @@
 package top.moverco.coolmovie.entity;
 
-public class Movie {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movie implements Parcelable {
     /**
      * poster_path : /ySiqbi1sW7imVYbtECZS0xQ3Hmj.jpg
      * adult : false
@@ -125,4 +128,53 @@ public class Movie {
     public String toString() {
         return "Title:"+getTitle();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.poster_path);
+        dest.writeString(this.release_date);
+        dest.writeInt(this.id);
+        dest.writeString(this.overview);
+        dest.writeString(this.title);
+        dest.writeDouble(this.popularity);
+        dest.writeDouble(this.vote_average);
+        dest.writeInt(this.vote_count);
+        dest.writeString(this.original_title);
+        dest.writeString(this.original_language);
+        dest.writeString(this.backdrop_path);
+    }
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        this.poster_path = in.readString();
+        this.release_date = in.readString();
+        this.id = in.readInt();
+        this.overview = in.readString();
+        this.title = in.readString();
+        this.popularity = in.readDouble();
+        this.vote_average = in.readDouble();
+        this.vote_count = in.readInt();
+        this.original_title = in.readString();
+        this.original_language = in.readString();
+        this.backdrop_path = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }
