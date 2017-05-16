@@ -18,23 +18,22 @@ import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 /**
- * Created by liuzongxiang on 11/05/2017.
+ * Created by liuzongxiang on 16/05/2017.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
-
+public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MyViewHolder> {
     private List<Movie> mMovies;
     Context mContext;
     private MovieItemClickListener mListener;
 
-    public MovieAdapter(Context context, @NonNull List<Movie> movies) {
+    public MovieGridAdapter(Context context, @NonNull List<Movie> movies) {
         this.mContext = context;
         this.mMovies = movies;
     }
 
     @Override
-    public MovieAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_layout, parent, false), mListener);
+    public MovieGridAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        MyViewHolder holder = new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.grid_item_layout, parent, false), mListener);
         return holder;
     }
 
@@ -43,13 +42,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MovieAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MovieGridAdapter.MyViewHolder holder, int position) {
         holder.movieTitle.setText(mMovies.get(position).getTitle());
-        holder.release_date.setText(mMovies.get(position).getRelease_date());
-        holder.original_title.setText(mMovies.get(position).getOriginal_title());
-        holder.original_language.setText(mMovies.get(position).getOriginal_language());
-        holder.popularity.setText(mMovies.get(position).getPopuarityAsString());
-        holder.rate.setText(mMovies.get(position).getVoteAverageAsString());
         loadBitmap(mMovies.get(position), holder.moviePoster);
 
         holder.itemView.setTag(position);
@@ -73,23 +67,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         TextView movieTitle;
         ImageView moviePoster;
-        TextView release_date;
-        TextView original_title;
-        TextView original_language;
-        TextView popularity;
-        TextView rate;
+
 
         public MyViewHolder(View itemView, MovieItemClickListener listener) {
             super(itemView);
             mListener = listener;
             itemView.setOnClickListener(this);
-            movieTitle = (TextView) itemView.findViewById(R.id.movie_title);
-            moviePoster = (ImageView) itemView.findViewById(R.id.movie_poster);
-            release_date = (TextView) itemView.findViewById(R.id.release_date);
-            original_title = (TextView) itemView.findViewById(R.id.original_title);
-            original_language = (TextView) itemView.findViewById(R.id.original_language);
-            popularity = (TextView) itemView.findViewById(R.id.popularity);
-            rate = (TextView) itemView.findViewById(R.id.rate);
+            movieTitle = (TextView) itemView.findViewById(R.id.grid_title);
+            moviePoster = (ImageView) itemView.findViewById(R.id.grid_poster);
         }
 
         @Override

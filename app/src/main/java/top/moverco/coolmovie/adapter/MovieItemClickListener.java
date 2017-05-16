@@ -7,5 +7,5 @@ import android.view.View;
  */
 
 public interface MovieItemClickListener {
-    public void onItemClick(View view,int position);
+    void onItemClick(View view,int position);
 }

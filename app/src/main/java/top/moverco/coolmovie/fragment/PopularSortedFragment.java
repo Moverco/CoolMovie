@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +22,7 @@ import java.util.List;
 import okhttp3.Call;
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.activity.DetailActivity;
-import top.moverco.coolmovie.adapter.MovieAdapter;
+import top.moverco.coolmovie.adapter.MovieGridAdapter;
 import top.moverco.coolmovie.adapter.MovieItemClickListener;
 import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.util.JsonParseUtil;
@@ -35,7 +35,7 @@ public class PopularSortedFragment extends Fragment {
     Context mContext;
     RecyclerView mRecyclerView;
     public static boolean mIsRecyclerviewIdle = false;
-    MovieAdapter mAdapter;
+    MovieGridAdapter mAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -57,7 +57,7 @@ public class PopularSortedFragment extends Fragment {
                }else mIsRecyclerviewIdle = false;
             }
         });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
         return view;
     }
 
@@ -86,7 +86,7 @@ public class PopularSortedFragment extends Fragment {
                         LoggerUtil.debug(response);
                         mMovies.clear();
                         mMovies = JsonParseUtil.parse(response);
-                        mAdapter = new MovieAdapter(mContext, mMovies);
+                        mAdapter = new MovieGridAdapter(mContext, mMovies);
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.setOnItemClickListener(new MovieItemClickListener() {
                             @Override
