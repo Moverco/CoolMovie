@@ -32,7 +32,6 @@
             android:name=".activity.DetailActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.TestActivity"/>
         <activity
             android:name=".activity.PosterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

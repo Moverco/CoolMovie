@@ -1,5 +1,7 @@
 package top.moverco.coolmovie.util;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -34,6 +36,15 @@ public class JsonParseUtil {
             LoggerUtil.debug(movie.toString());
         }
         return movies;
+    }
+
+    // TODO: 18/05/2017  
+    public static Movie parse(String jsonString,@Nullable String tag) {
+        Movie movie = new Movie();
+        JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
+
+        Gson gson = new Gson();
+        return movie;
     }
 
 

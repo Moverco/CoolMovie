@@ -1,6 +1,5 @@
 package top.moverco.coolmovie.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -53,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_rate:
                         mCurrentNavPosition = 0;
-                        Intent intent = new Intent(MainActivity.this,TestActivity.class);
-                        startActivity(intent);
-
                         break;
                     case R.id.nav_pop:
                         mCurrentNavPosition = 1;
