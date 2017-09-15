@@ -68,52 +68,55 @@ public class CaptionedImageView extends FrameLayout implements View.OnLayoutChan
         if (v.getVisibility() != VISIBLE) {
             return;
         }
-        final int height = bottom - top;
+        final int height = bottom - top + getTextView().getHeight();
         final int width = right - left;
-        if (height == 0 || width == 0){
+        if (height == 0 || width == 0) {
             return;
         }
         updateBlur();
     }
-    public void setImageResource(@DrawableRes int drawableResourceId){
+
+    public void setImageResource(@DrawableRes int drawableResourceId) {
         mDrawable = getResources().getDrawable(drawableResourceId);
         mImageView.setImageResource(drawableResourceId);
         updateBlur();
     }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void updateBlur(){
-        if (!(mDrawable instanceof BitmapDrawable)){
+    private void updateBlur() {
+        if (!(mDrawable instanceof BitmapDrawable)) {
             return;
         }
         final int textViewHeight = mTextView.getHeight();
-        if (textViewHeight==0){
+        if (textViewHeight == 0) {
             return;
         }
-        final float ratio = (float) textViewHeight/mImageView.getHeight();
+        final float ratio = (float) textViewHeight / mImageView.getHeight();
         final BitmapDrawable bitmapDrawable = (BitmapDrawable) mDrawable;
         final Bitmap originalBitmap = bitmapDrawable.getBitmap();
-        int height = (int) (ratio*originalBitmap.getHeight());
-        final int y = originalBitmap.getHeight()-height;
-        final Bitmap portionToBlur = Bitmap.createBitmap(originalBitmap,0,y,originalBitmap.getWidth(),height);
-        final Bitmap blurredBitmap = portionToBlur.copy(Bitmap.Config.ARGB_8888,true);
+        int height = (int) (ratio * originalBitmap.getHeight());
+        final int y = originalBitmap.getHeight() - height;
+        final Bitmap portionToBlur = Bitmap.createBitmap(originalBitmap, 0, y, originalBitmap.getWidth(), height);
+        final Bitmap blurredBitmap = portionToBlur.copy(Bitmap.Config.ARGB_8888, true);
 
         RenderScript script = RenderScript.create(getContext());
         ScriptIntrinsicBlur intrinsicBlur = ScriptIntrinsicBlur.create(script, Element.U8_4(script));
-        Allocation tmpIn = Allocation.createFromBitmap(script,portionToBlur);
-        Allocation tmpOut = Allocation.createFromBitmap(script,blurredBitmap);
+        Allocation tmpIn = Allocation.createFromBitmap(script, portionToBlur);
+        Allocation tmpOut = Allocation.createFromBitmap(script, blurredBitmap);
         intrinsicBlur.setRadius(25f);
         intrinsicBlur.setInput(tmpIn);
         intrinsicBlur.forEach(tmpOut);
         tmpOut.copyTo(blurredBitmap);
         new Canvas(blurredBitmap).drawColor(mScrimColor);
 
-        final Bitmap newBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888,true);
+        final Bitmap newBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
         final Canvas canvas = new Canvas(newBitmap);
-        canvas.drawBitmap(blurredBitmap,0,y,new Paint());
+        canvas.drawBitmap(blurredBitmap, 0, y, new Paint());
         mImageView.setImageBitmap(newBitmap);
     }
-    private void init(Context context){
-        inflate(context, R.layout.captioned_image,this);
+
+    private void init(Context context) {
+        inflate(context, R.layout.captioned_image, this);
         mTextView = (TextView) findViewById(R.id.captioned_text);
         mImageView = (SquareImageView) findViewById(R.id.captioned_img);
         mScrimColor = getResources().getColor(R.color.background);

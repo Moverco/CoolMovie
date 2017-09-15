@@ -31,4 +31,8 @@ public class MovieUtil {
         String posterPath = MovieURLUtil.getPosterURL(movie.getPoster_path());
         Glide.with(mContext).load(posterPath).centerCrop().placeholder(DEFAULT_POSTER_IMG).crossFade().into(imageView);
     }
+    public void bindMovieBackdrop(Movie movie, ImageView imageView){
+        String posterPath = MovieURLUtil.getPosterURL(movie.getBackdrop_path());
+        Glide.with(mContext).load(posterPath).centerCrop().placeholder(DEFAULT_POSTER_IMG).crossFade().into(imageView);
+    }
 }

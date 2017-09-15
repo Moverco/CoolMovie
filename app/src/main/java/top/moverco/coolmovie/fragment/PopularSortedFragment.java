@@ -30,17 +30,23 @@ import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 
-public class PopularSortedFragment extends Fragment {
+public class PopularSortedFragment extends Fragment implements Refreshed{
     List<Movie> mMovies = new ArrayList<>();
     Context mContext;
     RecyclerView mRecyclerView;
     public static boolean mIsRecyclerviewIdle = false;
     MovieAdapter mAdapter;
+    private static PopularSortedFragment popularSortedFragment;
+
+    public static PopularSortedFragment getInstance(){
+        return popularSortedFragment;
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        popularSortedFragment = new PopularSortedFragment();
     }
 
     @Nullable
@@ -123,7 +129,7 @@ public class PopularSortedFragment extends Fragment {
             }
         });
     }
-    public void refreshMovies() {
+    public void refresh() {
         loadMovies();
     }
 }

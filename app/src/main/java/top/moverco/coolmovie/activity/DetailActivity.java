@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     private void loadBitmap(Movie movie, ImageView imageView) {
         MovieUtil movieUtil = new MovieUtil(mContext);
-        movieUtil.bindMoviePoster(movie, imageView);
+        movieUtil.bindMovieBackdrop(movie, imageView);
     }
 
     @Override
@@ -81,7 +81,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
     }
 
     @Override

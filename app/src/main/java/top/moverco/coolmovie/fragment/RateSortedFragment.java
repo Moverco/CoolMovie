@@ -31,18 +31,24 @@ import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
 
-public class RateSortedFragment extends Fragment {
+public class RateSortedFragment extends Fragment implements Refreshed {
     private RecyclerView mRecyclerView;
     Context mContext;
     List<Movie> mMovies = new ArrayList<>();
     public static boolean mIsRecyclerviewIdle = false;
     MovieAdapter mAdapter;
     ProgressBar mProgressBar;
+    private static RateSortedFragment mRateSortedFragment;
+
+    public static RateSortedFragment getInstance(){
+        return mRateSortedFragment;
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mRateSortedFragment = new RateSortedFragment();
     }
 
     @Nullable
@@ -69,12 +75,13 @@ public class RateSortedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         LoggerUtil.debug("rate get movie");
         LoggerUtil.debug("url:" + MovieURLUtil.GET_TOP_RATED_ROOT_URL);
-//        loadMovies();
-       initMovies();
-
+        loadMovies();
+//        if (mAdapter==null){
+//            initMovies();
+//        }
     }
 
-    public void refreshMovies() {
+    public void refresh() {
         loadMovies();
     }
 
@@ -118,9 +125,9 @@ public class RateSortedFragment extends Fragment {
             movie.setTitle("Rmovie"+i);
             mMovies.add(movie);
         }
-        MovieAdapter adapter = new MovieAdapter(mContext,mMovies);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new MovieItemClickListener() {
+        mAdapter = new MovieAdapter(mContext,mMovies);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new MovieItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(mContext, mMovies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
