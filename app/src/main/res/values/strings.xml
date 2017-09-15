@@ -11,8 +11,21 @@
     <string name="original_title_string">Original</string>
     <string name="original_language">Original language:</string>
     <string name="original_language_string">CN</string>
-    <string name="popularity">Popularity:</string>
+    <string name="popularity">Popularity</string>
     <string name="popularity_string">9.99</string>
     <string name="rate_string">9.9</string>
     <string name="content_tmp">{"The Guardians must fight to keep their newfound family together as they unravel the mysteries of Peter Quill\'s true parentage.\"</string>
+    <string name="top_rate">TOP_RATE</string>
+    <string name="collection">Collection</string>
+    <string name="profile_name">Moverco</string>
+    <string name="profile_email">moverco9@gmail.com</string>
+    <string name="rate_description">Most rated movies</string>
+    <string name="pop_description">Most popularity movies</string>
+    <string name="collection_description">Collected movies by user</string>
+    <string name="POP">POP</string>
+    <string name="collection_tab">COLLECTION</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -4,6 +4,11 @@
               android:layout_height="match_parent"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical">
+    <include layout="@layout/toolbar"/>
+    <top.moverco.coolmovie.view.CaptionedImageView
+        android:id="@+id/detail_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:paddingTop="28dp"
@@ -52,10 +57,5 @@
         tools:text="@string/content_tmp"
         android:textSize="@dimen/content_size"/>
 
-    <ImageView
-        android:id="@+id/detail_backdrop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@mipmap/movie_load128"/>
+
 </LinearLayout>

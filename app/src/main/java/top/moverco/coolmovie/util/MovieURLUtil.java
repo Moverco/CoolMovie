@@ -9,6 +9,9 @@ public class MovieURLUtil {
     public static final String HTTP_ROOT = "https://api.themoviedb.org/3/movie/%s?api_key=%s";
     public static final String API_KEY_V3 = "f98d0ce3f94249a434d6d7faf25cf20a";
     public static final String POSTER_ROOT = "https://image.tmdb.org/t/p/w1280/%s";
+    public static final String RUNTIME_ROOT = "http://api.themoviedb.org/3/movie/%s?api_key=f98d0ce3f94249a434d6d7faf25cf20a";
+    public static final String VEDIO_ROOT = "http://api.themoviedb.org/3/movie/%s/videos?api_key=f98d0ce3f94249a434d6d7faf25cf20a";
+    public static final String REVIEWS_ROOT = "http://api.themoviedb.org/3/movie/%s/reviews?api_key=f98d0ce3f94249a434d6d7faf25cf20a";
 
     public static final int UPCOMING = 0x0001;
     public static final int LATEST = 0x0010;
@@ -45,4 +48,13 @@ public class MovieURLUtil {
         return  String.format(POSTER_ROOT,string);
     }
 
+    public static String getRuntimeURL(int movieId) {
+        return String.format(RUNTIME_ROOT,String.valueOf(movieId));
+    }
+    public static String getVedioURL(int movieId){
+        return String.format(VEDIO_ROOT,String.valueOf(movieId));
+    }
+    public static String getReviewsURL(int movieId){
+        return String.format(REVIEWS_ROOT,String.valueOf(movieId));
+    }
 }

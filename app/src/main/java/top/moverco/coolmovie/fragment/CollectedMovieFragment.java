@@ -14,41 +14,38 @@ import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
 import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.activity.DetailActivity;
 import top.moverco.coolmovie.adapter.MovieAdapter;
 import top.moverco.coolmovie.adapter.MovieItemClickListener;
 import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.util.JsonParseUtil;
 import top.moverco.coolmovie.util.LoggerUtil;
 import top.moverco.coolmovie.util.MovieURLUtil;
 
+/**
+ * Created by liuzongxiang on 18/05/2017.
+ */
 
-public class RateSortedFragment extends Fragment implements Refreshed {
+public class CollectedMovieFragment extends Fragment implements Refreshed {
     private RecyclerView mRecyclerView;
     Context mContext;
     List<Movie> mMovies = new ArrayList<>();
     public static boolean mIsRecyclerviewIdle = false;
     MovieAdapter mAdapter;
     ProgressBar mProgressBar;
-    private static RateSortedFragment mRateSortedFragment;
+    private static CollectedMovieFragment collectedMovieFragment;
 
-    public static RateSortedFragment getInstance(){
-        return mRateSortedFragment;
+    public static CollectedMovieFragment getInstance(){
+        return collectedMovieFragment;
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        mRateSortedFragment = new RateSortedFragment();
+        collectedMovieFragment = new CollectedMovieFragment();
     }
 
     @Nullable
@@ -75,59 +72,22 @@ public class RateSortedFragment extends Fragment implements Refreshed {
         super.onViewCreated(view, savedInstanceState);
         LoggerUtil.debug("rate get movie");
         LoggerUtil.debug("url:" + MovieURLUtil.GET_TOP_RATED_ROOT_URL);
-        loadMovies();
-//        if (mAdapter==null){
-//            initMovies();
-//        }
-    }
-
-    public void refresh() {
-        loadMovies();
-    }
-
-    private void loadMovies() {
-        OkHttpUtils.get()
-                .url(MovieURLUtil.GET_TOP_RATED_ROOT_URL)
-                .build()
-                .writeTimeOut(8000)
-                .connTimeOut(8000)
-                .readTimeOut(8000)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        LoggerUtil.debug("rate get movie error");
-                        Toast.makeText(mContext, "Network state is abnormal", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        mMovies.clear();
-                        mMovies = JsonParseUtil.parse(response);
-                        mAdapter = new MovieAdapter(mContext, mMovies);
-                        mRecyclerView.setAdapter(mAdapter);
-                        mAdapter.setOnItemClickListener(new MovieItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Toast.makeText(mContext, mMovies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                                intent.putExtra("movie", mMovies.get(position));
-                                startActivity(intent);
-                            }
-                        });
-                    }
-                });
+//        loadMovies();
+        if (mMovies.isEmpty()) {
+            initMovies();
+        }
 
     }
 
     void initMovies() {
         for (int i = 0; i < 20; i++) {
             Movie movie = new Movie();
-            movie.setTitle("Rmovie"+i);
+            movie.setTitle("Cmovie" + i);
             mMovies.add(movie);
         }
-        mAdapter = new MovieAdapter(mContext,mMovies);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new MovieItemClickListener() {
+        MovieAdapter adapter = new MovieAdapter(mContext, mMovies);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new MovieItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(mContext, mMovies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
@@ -136,5 +96,11 @@ public class RateSortedFragment extends Fragment implements Refreshed {
                 startActivity(intent);
             }
         });
+    }
+
+
+    @Override
+    public void refresh() {
+
     }
 }

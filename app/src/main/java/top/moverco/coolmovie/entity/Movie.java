@@ -3,6 +3,9 @@ package top.moverco.coolmovie.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import top.moverco.coolmovie.util.JsonParseUtil;
+import top.moverco.coolmovie.util.MovieURLUtil;
+
 public class Movie implements Parcelable {
     /**
      * poster_path : /ySiqbi1sW7imVYbtECZS0xQ3Hmj.jpg
@@ -31,6 +34,19 @@ public class Movie implements Parcelable {
     private String original_title;
     private String original_language;
     private String backdrop_path;
+    private int runtime;
+    private String[] reviews;
+    private Vedio mVedio;
+
+    public int getRuntime() {
+        int time_length = 0;
+        JsonParseUtil.parse(MovieURLUtil.getRuntimeURL(this.id),null);
+        return time_length ;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
 
     public int getVote_count() {
         return vote_count;
