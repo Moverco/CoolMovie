@@ -5,7 +5,7 @@ import android.util.Log;
 import top.moverco.coolmovie.BuildConfig;
 
 /**
- * Created by liuzongxiang on 11/05/2017.
+ * Created by Moverco
  */
 
 public class LoggerUtil {

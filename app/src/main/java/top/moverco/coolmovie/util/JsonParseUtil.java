@@ -15,7 +15,7 @@ import java.util.List;
 import top.moverco.coolmovie.entity.Movie;
 
 /**
- * Created by liuzongxiang on 11/05/2017.
+ * Created by Moverco
  */
 
 public class JsonParseUtil {
