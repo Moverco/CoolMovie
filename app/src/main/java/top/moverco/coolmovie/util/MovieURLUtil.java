@@ -6,6 +6,7 @@ package top.moverco.coolmovie.util;
  */
 
 public class MovieURLUtil {
+    //https://api.themoviedb.org/3/movie/76341?api_key=f98d0ce3f94249a434d6d7faf25cf20a&language=zh
     public static final String HTTP_ROOT = "https://api.themoviedb.org/3/movie/%s?api_key=%s";
     public static final String API_KEY_V3 = "f98d0ce3f94249a434d6d7faf25cf20a";
     public static final String POSTER_ROOT = "https://image.tmdb.org/t/p/w1280/%s";
