@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.util;
+package top.moverco.coolmovie.common.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

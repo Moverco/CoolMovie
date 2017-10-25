@@ -21,9 +21,9 @@ import top.moverco.coolmovie.R;
 import top.moverco.coolmovie.activity.DetailActivity;
 import top.moverco.coolmovie.adapter.MovieAdapter;
 import top.moverco.coolmovie.adapter.MovieItemClickListener;
-import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.util.LoggerUtil;
-import top.moverco.coolmovie.util.MovieURLUtil;
+import top.moverco.coolmovie.main.model.bean.Movie;
+import top.moverco.coolmovie.common.util.LoggerUtil;
+import top.moverco.coolmovie.common.util.MovieURLUtil;
 
 /**
  * Created by liuzongxiang on 18/05/2017.

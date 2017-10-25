@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.util;
+package top.moverco.coolmovie.common.util;
 
 import android.support.annotation.Nullable;
 
@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.moverco.coolmovie.entity.Movie;
+import top.moverco.coolmovie.main.model.bean.Movie;
 
 /**
  * Created by Moverco

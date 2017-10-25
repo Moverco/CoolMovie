@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import top.moverco.coolmovie.R;
-import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.util.MovieUtil;
+import top.moverco.coolmovie.main.model.bean.Movie;
+import top.moverco.coolmovie.common.util.MovieUtil;
 
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {

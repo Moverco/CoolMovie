@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import top.moverco.coolmovie.util.LoggerUtil;
+import top.moverco.coolmovie.common.util.LoggerUtil;
 
 /**
  * Created by liuzongxiang on 12/05/2017.

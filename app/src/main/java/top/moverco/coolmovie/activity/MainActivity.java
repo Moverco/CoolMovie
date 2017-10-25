@@ -27,7 +27,7 @@ import top.moverco.coolmovie.fragment.CollectedMovieFragment;
 import top.moverco.coolmovie.fragment.PopularSortedFragment;
 import top.moverco.coolmovie.fragment.RateSortedFragment;
 import top.moverco.coolmovie.fragment.Refreshed;
-import top.moverco.coolmovie.util.LoggerUtil;
+import top.moverco.coolmovie.common.util.LoggerUtil;
 
 import static top.moverco.coolmovie.R.id.refresh;
 

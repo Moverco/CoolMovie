@@ -1,10 +1,9 @@
-package top.moverco.coolmovie.entity;
+package top.moverco.coolmovie.main.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import top.moverco.coolmovie.util.JsonParseUtil;
-import top.moverco.coolmovie.util.MovieURLUtil;
+import top.moverco.coolmovie.entity.Vedio;
 
 public class Movie implements Parcelable {
     /**

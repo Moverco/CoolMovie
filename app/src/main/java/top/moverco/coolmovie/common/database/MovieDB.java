@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.util.LoggerUtil;
+import top.moverco.coolmovie.main.model.bean.Movie;
+import top.moverco.coolmovie.common.util.LoggerUtil;
 
 import static android.os.Build.ID;
 import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.BACKDROP_PATH;

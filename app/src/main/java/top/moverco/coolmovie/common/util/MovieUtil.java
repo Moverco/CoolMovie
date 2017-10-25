@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.util;
+package top.moverco.coolmovie.common.util;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import top.moverco.coolmovie.R;
-import top.moverco.coolmovie.entity.Movie;
+import top.moverco.coolmovie.main.model.bean.Movie;
 
 
 public class MovieUtil {

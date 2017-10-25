@@ -16,9 +16,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.moverco.coolmovie.R;
-import top.moverco.coolmovie.entity.Movie;
-import top.moverco.coolmovie.util.LoggerUtil;
-import top.moverco.coolmovie.util.MovieUtil;
+import top.moverco.coolmovie.main.model.bean.Movie;
+import top.moverco.coolmovie.common.util.LoggerUtil;
+import top.moverco.coolmovie.common.util.MovieUtil;
 import top.moverco.coolmovie.view.CaptionedImageView;
 
 

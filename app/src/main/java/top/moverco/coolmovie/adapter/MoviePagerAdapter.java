@@ -11,7 +11,7 @@ import top.moverco.coolmovie.entity.MovieType;
 import top.moverco.coolmovie.fragment.CollectedMovieFragment;
 import top.moverco.coolmovie.fragment.PopularSortedFragment;
 import top.moverco.coolmovie.fragment.RateSortedFragment;
-import top.moverco.coolmovie.util.LoggerUtil;
+import top.moverco.coolmovie.common.util.LoggerUtil;
 
 /**
  * Created by liuzongxiang on 18/05/2017.

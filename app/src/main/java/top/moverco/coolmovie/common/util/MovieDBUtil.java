@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.util;
+package top.moverco.coolmovie.common.util;
 
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -6,7 +6,7 @@ import android.net.Uri;
 
 import top.moverco.coolmovie.common.database.MovieConstract;
 import top.moverco.coolmovie.common.database.MovieProvider;
-import top.moverco.coolmovie.entity.Movie;
+import top.moverco.coolmovie.main.model.bean.Movie;
 
 /**
  * Created by liuzongxiang on 18/05/2017.
