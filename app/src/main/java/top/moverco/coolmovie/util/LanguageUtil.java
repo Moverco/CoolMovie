@@ -1,4 +1,4 @@
-package top.moverco.utils;
+package top.moverco.coolmovie.util;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package top.moverco.utils;
+package top.moverco.coolmovie.util;
 
 /**
  * Created by Moverco.
