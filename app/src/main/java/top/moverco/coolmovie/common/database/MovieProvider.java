@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.database;
+package top.moverco.coolmovie.common.database;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import top.moverco.coolmovie.database.MovieConstract.MovieEntry;
+import top.moverco.coolmovie.common.database.MovieConstract.MovieEntry;
 
 /**
  * Created by liuzongxiang on 16/05/2017.

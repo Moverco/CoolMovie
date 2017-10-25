@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.database;
+package top.moverco.coolmovie.common.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
-            android:name=".database.MovieProvider"
+            android:name=".common.database.MovieProvider"
             android:authorities="top.moverco.coolmovie"/>
 
         <activity

@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.database;
+package top.moverco.coolmovie.common.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,17 +12,17 @@ import top.moverco.coolmovie.entity.Movie;
 import top.moverco.coolmovie.util.LoggerUtil;
 
 import static android.os.Build.ID;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.BACKDROP_PATH;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.ORIGINAL_LANGUAGE;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.ORIGINAL_TITLE;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.OVERVIEW;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.POPULARITY;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.POP_TABLE;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.POSTER_PATH;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.RATE_TABLE;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.RELEASE_DATE;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.VOTE_AVERAGE;
-import static top.moverco.coolmovie.database.MovieConstract.MovieEntry.VOTE_COUNT;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.BACKDROP_PATH;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.ORIGINAL_LANGUAGE;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.ORIGINAL_TITLE;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.OVERVIEW;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.POPULARITY;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.POP_TABLE;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.POSTER_PATH;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.RATE_TABLE;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.RELEASE_DATE;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.VOTE_AVERAGE;
+import static top.moverco.coolmovie.common.database.MovieConstract.MovieEntry.VOTE_COUNT;
 
 /**
  * Created by liuzongxiang on 12/05/2017.

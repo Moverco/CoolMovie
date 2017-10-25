@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.net.Uri;
 
-import top.moverco.coolmovie.database.MovieConstract;
-import top.moverco.coolmovie.database.MovieProvider;
+import top.moverco.coolmovie.common.database.MovieConstract;
+import top.moverco.coolmovie.common.database.MovieProvider;
 import top.moverco.coolmovie.entity.Movie;
 
 /**

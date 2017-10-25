@@ -1,4 +1,4 @@
-package top.moverco.coolmovie.database;
+package top.moverco.coolmovie.common.database;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
