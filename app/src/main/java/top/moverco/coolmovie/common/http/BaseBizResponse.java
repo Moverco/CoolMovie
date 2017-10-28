@@ -6,15 +6,9 @@ package top.moverco.coolmovie.common.http;
 
 public class BaseBizResponse {
     public static final int STATE_OK = 200;
-//    // 密码错误
-//    public static final int STATE_PW_ERR = 100005;
-//    // token 无效／过期
-//    public static final int STATE_TOKEN_INVALID = 100006;
-//    // 用户已经存在
-//    public static int STATE_USER_EXIST = 100003;
-//    // 用户不存在
-//    public static int STATE_USER_NOT_EXIST = 100002;
-    // 状态码
+    public static final int STATE_INVALID_API_KEY = 401;
+    public static final int STATE_REQUESTED_NOT_FOUND = 404;
+
     private int code;
     private String msg;
 

@@ -14,10 +14,10 @@ public class MovieURLUtil {
     public static final String VEDIO_ROOT = "http://api.themoviedb.org/3/movie/%s/videos?api_key=f98d0ce3f94249a434d6d7faf25cf20a";
     public static final String REVIEWS_ROOT = "http://api.themoviedb.org/3/movie/%s/reviews?api_key=f98d0ce3f94249a434d6d7faf25cf20a";
 
-    public static final int UPCOMING = 0x0001;
-    public static final int LATEST = 0x0010;
-    public static final int POPULAR = 0x0100;
-    public static final int TOP_RATED = 0x1000;
+    public static final int UPCOMING = 1;
+    public static final int LATEST = 2;
+    public static final int POPULAR = 3;
+    public static final int TOP_RATED = 4;
 
     private final static String _UPCOMING = "upcoming";
     private final static String _LATEST = "latest";
